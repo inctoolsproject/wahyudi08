@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from Api import Poll, Talk, channel
-from lib.curve.ttypes import *
+from Api import Poll, Talk, Channel
+from Gen.ttypes import *
 
 def def_callback(str):
     print(str)
@@ -38,7 +38,7 @@ class LINE:
     self.cert = self.Talk.cert
 
     self.Poll = Poll(self.authToken)
-    self.channel = channel.Channel(self.authToken)
+    self.channel = Channel(self.authToken)
     self.channel.login()
 
     self.mid = self.channel.mid
@@ -89,8 +89,8 @@ class LINE:
         msg = Message()
         msg.to = Tomid
         msg.text = text
-
         return self.Talk.client.sendMessage(0, msg)
+        
   def sendImage(self, to_, path):
         M = Message(to=to_,contentType = 1)
         M.contentMetadata = None
@@ -114,9 +114,6 @@ class LINE:
             raise Exception('Upload image failure.')
         #r.content
         return True
-  def removeAllMessages(self, lastMessageId):
-	return self.Talk.client.removeAllMessages(0, lastMessageId)
-
   def sendEvent(self, messageObject):
         return self._client.sendEvent(0, messageObject)
 
@@ -149,18 +146,14 @@ class LINE:
 
   """Contact"""
 
-
   def blockContact(self, mid):
         return self.Talk.client.blockContact(0, mid)
-
 
   def unblockContact(self, mid):
         return self.Talk.client.unblockContact(0, mid)
 
-
   def findAndAddContactsByMid(self, mid):
         return self.Talk.client.findAndAddContactsByMid(0, mid)
-
 
   def findAndAddContactsByMids(self, midlist):
         for i in midlist:
@@ -193,20 +186,7 @@ class LINE:
   def getHiddenContactMids(self):
         return self.Talk.client.getHiddenContactMids()
 
-  def CloneContactProfile(self, mid):
-	contact = self.getContact(mid)
-	profile = self.getProfile()
-	profile.displayName = contact.displayName
-	profile.statusMessage = contact.statusMessage
-	profile.pictureStatus = contact.pictureStatus
-	self.updateDisplayPicture(profile.pictureStatus)
-	return self.updateProfile(profile)
-
-  def updateDisplayPicture(self, hash_id):
-	return self.Talk.client.updateProfileAttribute(0, 8, hash_id)
-
-
-  """Group"""                                                                                                                                                         
+  """Group"""
 
   def acceptGroupInvitation(self, groupId):
         return self.Talk.client.acceptGroupInvitation(0, groupId)
@@ -323,10 +303,8 @@ class LINE:
 
       prof = self.getProfile()
 
-      print("==============[C-A_Bot]==============")
-      print("     Thanks for TCR and my friend")
-      print("=====================================")
+      print("Chivas")
       print("mid -> " + prof.mid)
       print("name -> " + prof.displayName)
       print("authToken -> " + self.authToken)
-      print("cert -> " + self.cert if self.cert is not None else "")
+      print("cert -> " + self.cert if self.cert is not None else "No cert")
